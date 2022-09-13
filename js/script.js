@@ -13,32 +13,31 @@ function mainFunc() {
     // creating elements for movies list
     let createMovieElement = function (arr) {
         let movieElement = moviesCardTemplate.cloneNode(true);
-        movieElement.querySelector('.js-movie-img').src = arr.album.cover_medium;
-        // movieElement.querySelector('.js-movie-img').alt = arr.name.official;
-        // movieElement.querySelector('.js-modal-movie-img').src = arr.flags.png;
-        // movieElement.querySelector('.js-modal-movie-img').alt = arr.name.official;
-        // movieElement.querySelector('.js-country-title').textContent = arr.name.common;
-        // movieElement.querySelector('.js-modal-title').textContent = arr.name.official;
-        // movieElement.querySelector('.js-country-capital').textContent = arr.capital;
-        // movieElement.querySelector('.js-country-population').textContent = arr.population;
-        // movieElement.querySelector('.js-country-landlocked').textContent = arr.landlocked;
-        // movieElement.querySelector('.js-country-region').textContent = arr.region;
-        // movieElement.querySelector('.js-country-map-link').href = arr.maps.googleMaps;
-        // movieElement.querySelector('.js-country-independent').textContent = arr.independent;
-        // movieElement.querySelector('.js-country-status').textContent = arr.status;
-        // if (arr.borders === undefined) {
-        //     movieElement.querySelector('.js-country-borders').textContent = 'No borders';
-        // } else {
-        //     movieElement.querySelector('.js-country-borders').textContent = arr.borders.join(', ');
-        // }
-        // movieElement.querySelector('.js-country-car-sign').textContent = arr.car.signs;
-        // movieElement.querySelector('.js-country-car-rule').textContent = arr.car.side;
-        // movieElement.querySelector('.js-country-timezones').textContent = arr.timezones.join(', ');
-        // movieElement.querySelector('.js-country-start-week').textContent = arr.startOfWeek;
+        movieElement.querySelector('.js-movie-img').src = `https://api.napster.com/imageserver/v2/albums/${arr.albumId}/images/300x300.jpg`;
+        movieElement.querySelector('.js-movie-img').alt = arr.name;
+        movieElement.querySelector('.js-modal-movie-img').src = `https://api.napster.com/imageserver/v2/albums/${arr.albumId}/images/300x300.jpg`;
+        movieElement.querySelector('.js-modal-movie-img').alt = arr.name;
 
-        // movieElement.querySelector('.js-modal').id = `exampleModal${arr.area}`;
-        // movieElement.querySelector('.js-modal-title').id = `exampleModal${arr.area}`;
-        // movieElement.querySelector('.js-modal-btn').setAttribute('data-bs-target', `#exampleModal${arr.area}`);
+        movieElement.querySelector('.js-country-title').textContent = arr.name;
+        movieElement.querySelector('.js-modal-title').textContent = arr.name;
+        movieElement.querySelector('.js-country-capital').textContent = arr.artistName;
+        movieElement.querySelector('.js-country-population').textContent = arr.albumName;
+
+        movieElement.querySelector('.audio').src = arr.previewURL;
+        movieElement.querySelector('.js-country-independent').textContent = arr.disc;
+        movieElement.querySelector('.js-country-borders').textContent = arr.playbackSeconds;
+        movieElement.querySelector('.js-country-timezones').textContent = arr.shortcut;
+        movieElement.querySelector('.js-music-explicits').textContent = arr.isExplicit;
+        movieElement.querySelector('.js-music-hires').textContent = arr.isAvailableInHiRes;
+        
+        let formats = [];
+        arr.formats.forEach((item, i) => {
+            formats.push(item.name);
+        });
+        movieElement.querySelector('.js-country-start-week').textContent = formats.join(', ');
+        movieElement.querySelector('.js-modal').id = `exampleModal${arr.index}`;
+        movieElement.querySelector('.js-modal-title').id = `exampleModal${arr.index}`;
+        movieElement.querySelector('.js-modal-btn').setAttribute('data-bs-target', `#exampleModal${arr.index}`);
     
         return movieElement;
     }
@@ -60,7 +59,7 @@ function mainFunc() {
 
 // api request
 function searchMovies(event) {
-    let urlApi = `https://api.deezer.com/search/track?q=${event}`;
+    let urlApi = `https://api.napster.com/v2.2/search?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&query=${event}&type=track`;
 
     setTimeout(() => {
         countryList.innerHTML = null;
@@ -78,11 +77,13 @@ function searchMovies(event) {
         } else {
             searchInput.blur();
             elFailTxt.classList.add('d-none');
-            arr = data;
+            arr = data.search.data.tracks;
             mainFunc();
         }
     })
 }
+
+// searchMovies();
 // Search input enter
 searchInput.addEventListener('keyup', function (event) {
     if (event.key === 'Enter') {
@@ -98,6 +99,7 @@ searchBtn.onclick = function () {
         return;
     } else {
     countryList.innerHTML = null;
+    arr = [];
     searchInput.value = null;
     // searchInput.blur();
 
@@ -105,6 +107,6 @@ searchBtn.onclick = function () {
     }
 }
 
-const request = fetch('https://api.deezer.com/search/track?q=uzbek').
-  then(res => res.json()).
-  then(data => console.log(data));
+// const request = fetch('https://api.napster.com/v2.2/search?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&query=love&type=artist').
+//   then(res => res.json()).
+//   then(data => console.log(data));
