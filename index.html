@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">
   <!-- search movie by Kantor Tegalsari from <a href="https://thenounproject.com/browse/icons/term/search-movie/" target="_blank" title="search movie Icons">Noun Project</a> -->
   <!-- <div> Автор иконок: <a href="https://www.flaticon.com/ru/authors/dinosoftlabs" title="DinosoftLabs"> DinosoftLabs </a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com'</a></div> -->
-  <title>Country Searcher</title>
+  <title>Music Searcher</title>
   <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
 </head>
 <body>
@@ -47,29 +47,29 @@
           </span>
         </p>
       </div>
-      <!-- movies list -->
-      <ul class="js-country-list list-unstyled d-flex flex-wrap justify-content-between mt-4">
+      <!-- music list -->
+      <ul class="js-music-list list-unstyled d-flex flex-wrap justify-content-between mt-4">
       </ul>
-      <!-- end movies list -->
+      <!-- end music list -->
     </div>
   </section>
 </main>
 <!-- Button trigger modal -->
 
-<!-- main movies list template -->
+<!-- main music list template -->
 <template id="template-element">
   <li class="mb-4">
     <!-- card heading -->
     <div class="card position-relative overflow-hidden shadow" style="width: 18rem; height: 34.8rem">
       <!-- card image -->
       <div class="img-wrapper">
-        <img src="" class="js-movie-img card-img-top shadow-sm" alt="" width="300" height="300">
+        <img src="" class="js-music-img card-img-top shadow-sm" alt="" width="300" height="300">
       </div>
       <!-- card body -->
       <div class="card-body pb-0">
         <h5 class="js-card-title mb-0 fs-6 fw-bold rounded-4 col-12" style="max-height: 40px;">
           Name:
-          <span class="js-country-title fw-lighter">
+          <span class="js-music-title fw-lighter">
             N/A
           </span>
         </h5>
@@ -80,7 +80,7 @@
         <li class="list-group-item overflow-auto" style="max-height: 44px;">
           <h6 class="card-title fs-6 fw-bold rounded-5">
             Artist Name: 
-            <span class="js-country-capital fw-lighter">
+            <span class="js-music-artist-name fw-lighter">
             N/A
           </span>
         </h6>
@@ -89,7 +89,7 @@
         <li class="list-group-item">
           <h6 class="card-title fs-6 fw-bold rounded-5">
             Album Name: 
-            <span class="js-country-population fw-lighter">
+            <span class="js-music-album-name fw-lighter">
             N/A
           </span>
         </h6>
@@ -118,7 +118,7 @@
               <!-- modal body -->
               <div class="modal-body js-modal-body overflow-hidden">
                 <div class="modal-inner d-flex">
-                  <img src="" class="js-modal-movie-img rounded-1" alt="" width="286" height="190">
+                  <img src="" class="js-modal-music-img rounded-1" alt="" width="286" height="190">
                   <!-- modal info -->
                   <div class="modal-info-box ms-2 w-100">
                     <hr class="mt-0 mb-0 ">
@@ -126,7 +126,7 @@
                     <div class="rating-and-runtime-box d-flex justify-content-between align-items-center mt-2 mx-2">
                       <!-- Independent -->
                       <h6 class="card-title fs-6 fw-bold rounded-5 mb-0">Disc:
-                        <span class="js-country-independent fw-lighter">
+                        <span class="js-music-disc fw-lighter">
                           N/A
                         </span>
                       </h6>
@@ -136,7 +136,7 @@
                     <div class="rating-and-runtime-box d-flex justify-content-between align-items-center mt-2 mx-2">
                       <!-- borders -->
                       <h6 class="card-title fs-6 fw-bold rounded-5 mb-0">Playback seconds:
-                        <span class="js-country-borders fw-lighter">
+                        <span class="js-music-playback fw-lighter">
                           N/A
                         </span>
                       </h6>
@@ -163,7 +163,7 @@
                     <div class="rating-and-runtime-box d-flex justify-content-between align-items-center mt-2 mx-2">
                       <!-- shortcuts -->
                       <h6 class="card-title fs-6 fw-bold rounded-5 mb-0">Shortcuts:
-                        <span class="js-country-timezones fw-lighter">
+                        <span class="js-music-shortcuts fw-lighter">
                           N/A
                         </span>
                       </h6>
@@ -173,7 +173,7 @@
                     <!-- category -->
                     <h6 class="card-title fs-6 fw-bold rounded-5 mx-2 mt-1">
                       Formats:
-                      <span class="js-country-start-week fw-lighter">
+                      <span class="js-music-formats fw-lighter">
                         N/A
                     </span>
                   </div>
@@ -193,7 +193,7 @@
     </div>
   </li>
 </template>
-<!-- end main movies list template -->
+<!-- end main music list template -->
 <style>
   ::-webkit-scrollbar {
     width: 8px;
