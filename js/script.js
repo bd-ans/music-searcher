@@ -29,7 +29,7 @@ function mainFunc() {
         movieElement.querySelector('.js-country-timezones').textContent = arr.shortcut;
         movieElement.querySelector('.js-music-explicits').textContent = arr.isExplicit;
         movieElement.querySelector('.js-music-hires').textContent = arr.isAvailableInHiRes;
-        
+
         let formats = [];
         arr.formats.forEach((item, i) => {
             formats.push(item.name);
@@ -38,7 +38,7 @@ function mainFunc() {
         movieElement.querySelector('.js-modal').id = `exampleModal${arr.index}`;
         movieElement.querySelector('.js-modal-title').id = `exampleModal${arr.index}`;
         movieElement.querySelector('.js-modal-btn').setAttribute('data-bs-target', `#exampleModal${arr.index}`);
-    
+
         return movieElement;
     }
 
@@ -55,21 +55,19 @@ function mainFunc() {
     }
     
     renderCountries(arr);
+    if (arr.length === 0) {
+        elFailTxt.classList.remove('d-none');
+    } else {
+        elFailTxt.classList.add('d-none');
+    }
 }
 
 // api request
-function searchMovies(event) {
-    let urlApi = `https://api.napster.com/v2.2/search?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&query=${event}&type=track`;
-
-    setTimeout(() => {
-        countryList.innerHTML = null;
-        mainFunc();
-    }, 1000);
-    
-    fetch(urlApi)
-    .then(response => response.json())
-    .catch(err => console.log(err))
-    .then(data => {
+const searchMovies = async music => {
+    try {
+        const urlApi = await fetch(`https://api.napster.com/v2.2/search?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&query=${music}&type=track`);
+        const data = await urlApi.json();
+        
         if (data.status === 404) {
             arr = [];
             elFailTxt.classList.remove('d-none');
@@ -80,10 +78,17 @@ function searchMovies(event) {
             arr = data.search.data.tracks;
             mainFunc();
         }
-    })
+    } catch (err) {
+        console.log(err);
+    } finally {
+        searchInput.value = '';
+            searchBtn.disabled = false;
+            searchBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>`;
+    }
 }
 
-// searchMovies();
 // Search input enter
 searchInput.addEventListener('keyup', function (event) {
     if (event.key === 'Enter') {
@@ -100,13 +105,9 @@ searchBtn.onclick = function () {
     } else {
     countryList.innerHTML = null;
     arr = [];
-    searchInput.value = null;
-    // searchInput.blur();
+    searchBtn.disabled = true;
+    searchBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
 
     searchMovies(value)
     }
 }
-
-// const request = fetch('https://api.napster.com/v2.2/search?apikey=YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4&query=love&type=artist').
-//   then(res => res.json()).
-//   then(data => console.log(data));
